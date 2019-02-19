@@ -1,5 +1,5 @@
-<?php include 'wiki/conf/local.protected.php' ?>
-<!DOCTYPE html> 
+<?php require 'wiki/conf/local.protected.php' ?>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -8,7 +8,7 @@
 <!-- BEGIN MODIF META RL -->
 <?php include PUN_ROOT.'include/user/header_favicon.php';?>
 <?php include PUN_ROOT.'include/user/header_img_aleatoire.php';?>
-<link rel="stylesheet" type="text/css" href="<?php echo path_to_forum.'style/'.$conf['pun_style'].'.css'; ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo path_to_forum.'style/'.$conf['pun_style'].'.css?' . current_theme . ''; ?>" />
 <!-- BEGIN MODIF META RL -->
 
 <!--
