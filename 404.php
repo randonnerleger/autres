@@ -3,11 +3,31 @@ require 'wiki/conf/local.protected.php';
 
 $request=$_SERVER['REQUEST_URI'];
 
+$thumb = false;
+if ((strpos($request, 'thumbs/') !== false)) {
+
+	$request = str_replace("thumbs/", "", $request);
+	$thumb = true;
+
+}
+
 require 'forum/uploads/fotoo-import.php';
 
 if(array_key_exists($request,$MovedImg)) {
 
-	$NewUrl="https://".$_SERVER['HTTP_HOST'].$MovedImg[$request];
+	$NewImg = $MovedImg[$request];
+
+	if ( $thumb ) {
+
+		$length = -4;
+		if ( ($GetExt=substr($MovedImg[$request], -4) == 'jpeg' ))
+			$length = -5;
+
+		$NewImg=substr_replace($NewImg, '.s', $length, $length);
+
+	}
+
+	$NewUrl="https://".$_SERVER['HTTP_HOST'].$NewImg;
 	header("HTTP/1.0 301 Moved Permanently");
 	header("Location: $NewUrl");
 	header("Connection: close");
