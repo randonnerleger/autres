@@ -8,7 +8,7 @@
 <!-- BEGIN MODIF META RL -->
 <?php include PUN_ROOT.'include/user/header_favicon.php';?>
 <?php include PUN_ROOT.'include/user/header_img_aleatoire.php';?>
-<link rel="stylesheet" type="text/css" href="<?php echo path_to_forum.'style/'.$conf['pun_style'].'.css?' . current_theme . ''; ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo path_to_forum.'style/'.$conf['pun_style'].'.css?version=' . current_theme . ''; ?>" />
 <!-- BEGIN MODIF META RL -->
 
 <!--
