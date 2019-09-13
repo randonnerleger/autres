@@ -1,5 +1,5 @@
 <?php
-define("current_theme",			2.2);										# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
+define("current_theme",			2.3);										# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
 
 define("folder_rl",				"");									# Renseigner le sous dossier ou serait le site RL, en localhost notamment
 define("folder_forum",			"forum");								# Nom du dossier ou est le forum
@@ -73,8 +73,9 @@ function where() {
 			} else {
 
 			$where = substr(path_abs_page, count_path_to_wiki+12,6);	# doku.php?id= = 12 caractères
+
 			switch ($where) {
-				case "start";
+				case "";
 					$GLOBALS['menuG_start'] = 'active';					# Je suis sur la page d'accueil
 					break;
 				case "presen";
@@ -116,6 +117,31 @@ return $browser;
 }
 $hackOperaMini = get_browsername() == 'Opera' ? 'opera' : '' ;
 
+function GetRLStyle() {
+	if ( isset($_COOKIE['RLFontSize'] ) ) {
+		echo '<style id="MyCustomCss">.tclcon a, .pun .postmsg, #dokuwiki__site .page {font-size: ' . $_COOKIE['RLFontSize'] . 'rem;}</style>';
+	} else {
+		echo '<style id="MyCustomCss"></style>';
+	}
+}
+function RLStyle($pun_user_style) {
+	if ( isset($_COOKIE['RLFavoriteCss'] ) ) {
+		$pun_user_style = str_replace('RL_Clair', '', $pun_user_style);
+		$pun_user_style = str_replace('RL_Sombre', '', $pun_user_style);
+		$rltheme = $_COOKIE['RLFavoriteCss'] . $pun_user_style ;
+	} else {
+		$rltheme = $pun_user_style;
+	}
+	return $rltheme;
+}
+function isRLSombre($pun_user_style) {
+	$isRLSombre = strpos($pun_user_style, 'RL_Sombre') !== false ? 'checked' : '' ;
+
+	if ( isset($_COOKIE['RLFavoriteCss'] ) )
+		$isRLSombre = ($_COOKIE['RLFavoriteCss'] == 'RL_Sombre') ? 'checked' : '' ;
+
+	echo $isRLSombre;
+}
 
 class UserInput {
 	protected $post, $get, $cookie;
