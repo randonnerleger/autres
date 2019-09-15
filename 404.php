@@ -1,5 +1,7 @@
 <?php
-require 'wiki/conf/local.protected.php';
+require_once 'configRL.php';
+define('PUN_ROOT', folder_forum . '/' );
+require_once folder_forum.'/include/common.php';
 
 $request=$_SERVER['REQUEST_URI'];
 

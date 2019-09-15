@@ -1,5 +1,5 @@
 <?php
-define("current_theme",			2.3);										# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
+define("current_theme",			2.3);									# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
 
 define("folder_rl",				"");									# Renseigner le sous dossier ou serait le site RL, en localhost notamment
 define("folder_forum",			"forum");								# Nom du dossier ou est le forum
@@ -131,6 +131,8 @@ function RLStyle($pun_user_style) {
 		$rltheme = $_COOKIE['RLFavoriteCss'] . $pun_user_style ;
 	} else {
 		$rltheme = $pun_user_style;
+		$isRLSombre = strpos($pun_user_style, 'RL_Sombre') !== false ? 'RL_Sombre' : 'RL_Clair' ;
+		setcookie('RLFavoriteCss', $isRLSombre, time() + (86400 * 365), "/"); // 86400 = 1 day
 	}
 	return $rltheme;
 }
