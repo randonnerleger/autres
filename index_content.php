@@ -13,13 +13,13 @@ Nous avons mis en commun des outils et des connaissances pour la promouvoir et l
 <div class="flex-container">
 
 	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?w=20&amp;tok=af597e&amp;media=menu:interrogation.png" class="media" alt="" width="20" />
+		<img src="/wiki/lib/exe/fetch.php?media=menu:interrogation.png" class="media" alt="" width="20" />
 		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=presentation:sommaire" class="wikilink1" title="Découverte">Découverte</a></h3>
 		Découvrir la randonnée légère et comment débuter.
 	</div><!-- .wrap_box plugin_wrap -->
 
 	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?w=20&amp;tok=af597e&amp;media=menu:interrogation.png" class="media" alt="" width="20" />
+		<img src="/wiki/lib/exe/fetch.php?media=menu:interrogation.png" class="media" alt="" width="20" />
 		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=faq_de_la_randonnee_legere_mul" class="wikilink1" title="FAQ">FAQ</a></h3>
 		Tout ce que vous avez toujours voulu savoir sur la randonnée légère.
 	</div><!-- .wrap_box plugin_wrap -->
@@ -31,19 +31,19 @@ Nous avons mis en commun des outils et des connaissances pour la promouvoir et l
 	</div><!-- .wrap_box plugin_wrap -->
 
 	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?w=20&amp;tok=73a246&amp;media=menu:wiki.png" class="media" alt="" width="20" />
+		<img src="/wiki/lib/exe/fetch.php?media=menu:wiki.png" class="media" alt="" width="20" />
 		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=accueil_du_wiki" class="wikilink1" title="Wiki">Wiki</a></h3>
 		Consulter, enrichir ces connaissances.
 	</div><!-- .wrap_box plugin_wrap -->
 
 	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?w=20&amp;tok=fcabcb&amp;media=menu:forum.png" class="media" alt="" width="20" />
+		<img src="/wiki/lib/exe/fetch.php?media=menu:forum.png" class="media" alt="" width="20" />
 		<h3><a href="<?php echo path_to_forum; ?>" class="urlextern" title="Forum">Forum</a></h3>
 		Discuter avec des passionnés.
 	</div><!-- .wrap_box plugin_wrap -->
 
 	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?w=20&amp;tok=b98309&amp;media=menu:notice.png" class="media" alt="" width="20" />
+		<img src="/wiki/lib/exe/fetch.php?media=menu:notice.png" class="media" alt="" width="20" />
 		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=guide:sommaire" class="wikilink1" title="Guide d'utilisation">Guide d'utilisation</a></h3>
 		Comment fonctionne ce site.
 	</div><!-- .wrap_box plugin_wrap -->
