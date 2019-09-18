@@ -10,51 +10,43 @@ Cette réflexion a été à l'origine de <a href="https://www.randonner-leger.or
 Nous avons mis en commun des outils et des connaissances pour la promouvoir et la développer, joins-toi à nous !
 </p>
 
-<div class="flex-container">
+<div class="grid-5 has-gutter-l">
 
-	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?media=menu:interrogation.png" class="media" alt="" width="20" />
-		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=presentation:sommaire" class="wikilink1" title="Découverte">Découverte</a></h3>
-		Découvrir la randonnée légère et comment débuter.
-	</div><!-- .wrap_box plugin_wrap -->
+	<div class="col-2 grid-1 has-gutter-l">
 
-	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?media=menu:interrogation.png" class="media" alt="" width="20" />
-		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=faq_de_la_randonnee_legere_mul" class="wikilink1" title="FAQ">FAQ</a></h3>
-		Tout ce que vous avez toujours voulu savoir sur la randonnée légère.
-	</div><!-- .wrap_box plugin_wrap -->
+		<div class="wrap_box plugin_wrap">
+			<h3 class="decouverte"><a href="<?php echo path_to_wiki; ?>doku.php?id=presentation:sommaire" title="Découverte">Découverte</a></h3>
+			Découvrir la randonnée légère et comment débuter.
+		</div>
 
-	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?media=menu:minilogolbleu.png" class="media" alt="">
-		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=association_rl:association_randonner_leger" class="wikilink1" title="L'association">L'association</a></h3>
-		Devenir adhérent et participer aux activités qu'elle organise.
-	</div><!-- .wrap_box plugin_wrap -->
+		<div class="wrap_box plugin_wrap">
+			<h3 class="association"><a href="<?php echo path_to_wiki; ?>doku.php?id=association_rl:association_randonner_leger" title="L'association">L'association</a></h3>
+			Devenir adhérent et participer aux activités qu'elle organise.
+		</div>
 
-	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?media=menu:wiki.png" class="media" alt="" width="20" />
-		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=accueil_du_wiki" class="wikilink1" title="Wiki">Wiki</a></h3>
-		Consulter, enrichir ces connaissances.
-	</div><!-- .wrap_box plugin_wrap -->
+		<div class="wrap_box plugin_wrap">
+			<h3 class="wiki"><a href="<?php echo path_to_wiki; ?>doku.php?id=accueil_du_wiki" title="Wiki">Wiki</a></h3>
+			Consulter, enrichir ses connaissances.
+		</div>
 
-	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?media=menu:forum.png" class="media" alt="" width="20" />
-		<h3><a href="<?php echo path_to_forum; ?>" class="urlextern" title="Forum">Forum</a></h3>
-		Discuter avec des passionnés.
-	</div><!-- .wrap_box plugin_wrap -->
+		<div class="wrap_box plugin_wrap">
+			<h3 class="forum"><a href="<?php echo path_to_forum; ?>" title="Forum">Forum</a></h3>
+			Discuter avec des passionnés.
+		</div>
+	</div>
 
-	<div class="wrap_box plugin_wrap">
-		<img src="/wiki/lib/exe/fetch.php?media=menu:notice.png" class="media" alt="" width="20" />
-		<h3><a href="<?php echo path_to_wiki; ?>doku.php?id=guide:sommaire" class="wikilink1" title="Guide d'utilisation">Guide d'utilisation</a></h3>
-		Comment fonctionne ce site.
-	</div><!-- .wrap_box plugin_wrap -->
+	<div class="col-3">
+
+		<figure>
+			<img src="<?php echo path_to_wiki; ?>lib/exe/fetch.php?media=divers:accueil3.jpg"
+			title="Islande 2008, traversée est-ouest en autonomie "
+			alt="Islande 2008, traversée est-ouest en autonomie " />
+			<figcaption>Photo: Islande 2008,
+				<a href="/perso/doku.php?id=liste_equipement_islande" title="Liste equipement islande">l'équipement</a>,
+				<a href="/perso/doku.php?id=traversee_de_l_islande_est-ouest_en_autonomie" title="Traversée de l'islande est-ouest en autonomie">l'itinéraire et autres infos</a>.
+			</figcaption>
+		</figure>
+
+	</div>
 
 </div>
-
-<figure>
-	<img src="/wiki/lib/exe/fetch.php?media=divers:accueil3.jpg"
-		title="Islande 2008, traversée est-ouest en autonomie "
-		alt="Islande 2008, traversée est-ouest en autonomie " />
-		<figcaption>Photo: Islande 2008, <a href="/perso/doku.php?id=liste_equipement_islande" class="urlextern" title="Liste equipement islande">l'équipement</a>,
-			<a href="/perso/doku.php?id=traversee_de_l_islande_est-ouest_en_autonomie" class="urlextern" title="Traversée de l'islande est-ouest en autonomie">l'itinéraire et autres infos</a>.
-		</figcaption>
-</figure>
