@@ -26,7 +26,7 @@ function GetFeed($url) {
 }
 
 echo '<h2>Sur les forums</h2>';
-echo '<div class="flex-container grid-2">';
+echo '<div class="grid-2 has-gutter-l">';
 
 	echo '	<div class="wrap_box plugin_wrap"><h3>Les derniers Messages</h3>';
 		GetFeed('https://www.randonner-leger.org/forum/extern.php?action=feed&type=xml&show=10');
