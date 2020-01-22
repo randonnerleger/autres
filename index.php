@@ -35,7 +35,7 @@ GetRLStyle();
 			<div class="pad group">
 
 				<div class="headings group">
-					<h1><a href="<?php echo path_to_home ?>"><img src="/rl/wiki/lib/tpl/RL/images/logo.png" alt="" width="64" height="64"> <span>Le site de la randonnée légère et de la MUL (marche ultra-légère)</span></a></h1>
+					<h1><a href="<?php echo path_to_home ?>"><span>Le site de la randonnée légère et de la MUL (marche ultra-légère)</span></a></h1>
 
 					<div id="brdwelcome" class="inbox">
 						<p class="conl">
