@@ -1,5 +1,5 @@
 <?php
-define("current_theme",			2.4);									# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
+define("current_theme",			"2.4.1");									# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
 
 define("folder_rl",				"");									# Renseigner le sous dossier ou serait le site RL, en localhost notamment
 define("folder_forum",			"forum");								# Nom du dossier ou est le forum
