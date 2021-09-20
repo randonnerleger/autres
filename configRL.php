@@ -1,5 +1,7 @@
 <?php
-define("current_theme",			"2.4.1");									# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
+define('ABSPATH', dirname(__FILE__) . '/');
+
+define("current_theme",			"2.4.2");									# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
 
 define("folder_rl",				"");									# Renseigner le sous dossier ou serait le site RL, en localhost notamment
 define("folder_forum",			"forum");								# Nom du dossier ou est le forum
@@ -144,7 +146,88 @@ function isRLSombre($pun_user_style) {
 
 	echo $isRLSombre;
 }
+function get_new_size( $old_w, $old_h, $max = 800 ) {
 
+	if( $old_w > $old_h ) {
+		$new_w = $max;
+		$new_h = $old_h * ( $max/$old_w );
+	}
+
+	if( $old_w < $old_h ) {
+		$new_w = $old_w * ( $max/$old_h );
+		$new_h = $max;
+	}
+
+	if( $old_w == $old_h ) {
+		$new_w = $max;
+		$new_h = $max;
+	}
+
+	return array(
+		(int)$new_w,
+		(int)$new_h
+	);
+
+}
+function get_rehost_attr( $url, $rehost = false ) {
+
+	$parsed_url		 	= array_map( 'rawurlencode', parse_url( urldecode($url) ) );
+	$parsed_url['path']	= str_replace( '%2F', '/', $parsed_url['path'] );
+	$img_source			= filter_var( $parsed_url['scheme'] . '://' . $parsed_url['host'] . $parsed_url['path'], FILTER_SANITIZE_URL );
+	$img_extension		= pathinfo( $parsed_url['path'], PATHINFO_EXTENSION );
+	$img_sha			= sha1( $img_source );
+	$rehost_folder		= substr( $img_sha, 0, 2 );
+	$rehost_hash		= $rehost_folder . '/' . substr($img_sha, 2);
+	$rehost_path		= 'i/' . $rehost_hash . ( null != $img_extension ? '.' . $img_extension : '' );
+
+	$img_attr = array(
+		'broken' => false,
+		'source' => $img_source,
+		'src' => path_to_forum . 'rehost/' . $rehost_path,
+		'extension' => $img_extension,
+		'hash' => $rehost_hash,
+		'folder' => $rehost_folder,
+		'path' => $rehost_path
+	);
+
+	if( file_exists( ABSPATH . folder_forum . '/rehost/' . $rehost_path) ) {
+		$img_size = getimagesize( ABSPATH . folder_forum . '/rehost/' . $rehost_path );
+		$img_attr = array_merge( $img_attr, array(
+			'src' => path_to_forum . 'rehost/' . $rehost_path,
+			'width' => $img_size[0],
+			'height' => $img_size[1],
+		));
+	} else {
+		$header_response = get_headers($img_source);
+		if ($header_response && strpos( $header_response[0], "404" ) === false) {
+			$img_size = getimagesize( $img_source );
+			$img_attr = array_merge( $img_attr, array(
+				'src' => path_to_forum . 'rehost/?img=' . $img_source,
+				'width' => $img_size[0],
+				'height' => $img_size[1],
+			));
+		}else {
+			$img_size = false;
+		}
+	}
+
+	if( $img_attr['width'] > 800 || $img_attr['height'] > 800) {
+		$new_size = get_new_size( $img_attr['width'], $img_attr['height'], 800 );
+		$img_attr['width'] = $new_size[0];
+		$img_attr['height'] = $new_size[1];
+	}
+
+	if ( ! is_array( $img_size ) ) {
+		$img_attr = array_merge( $img_attr, array(
+			'broken' => true,
+			'width' => 200,
+			'height' => 200
+		));
+	}
+
+	return $img_attr;
+
+}
 class UserInput {
 	protected $post, $get, $cookie;
 	/**
