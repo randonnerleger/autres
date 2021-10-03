@@ -183,7 +183,7 @@ function get_rehost_attr( $url, $rehost = false ) {
 	$img_attr = array(
 		'broken' => false,
 		'source' => $img_source,
-		'src' => path_to_forum . 'rehost/' . $rehost_path,
+		'src' => path_to_forum . 'rehost/?img=' . $img_source,
 		'extension' => $img_extension,
 		'hash' => $rehost_hash,
 		'folder' => $rehost_folder,
