@@ -96,8 +96,8 @@ GetRLStyle();
 .association::before,
 .wiki::before,
 .forum::before {
-	content:'\f059';
-	font-family: fontawesome;
+	content: "\f059";
+	font-family: ForkAwesome;
 	padding-right: 10px;
 	font-weight: normal;
 	font-size: 1.4em;
@@ -105,10 +105,10 @@ GetRLStyle();
 	top: 7px;
 	left:11px;
 }
-.decouverte::before {content:'\f0eb';}
-.association::before {content:'\f0c0';}
-.forum::before {content:'\f0e6';}
-.wiki::before {content:'\f02d';}
+.decouverte::before {content: "\f0eb";}
+.association::before {content: "\f0c0";}
+.forum::before {content: "\f0e6";}
+.wiki::before {content: "\f02d";}
 .grid-5 h3 {font-size: 1.2em;margin-bottom:10px;margin-left: 30px;}
 .grid-5 div.wrap_box,.grid-5 .wrap_box {font-size: .9em;padding: 10px;}
 .extwiki .dokuwiki div.wrap_box {min-height: auto;}
