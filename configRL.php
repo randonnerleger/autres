@@ -183,11 +183,13 @@ function get_rehost_attr( $url, $rehost = false ) {
 	$img_attr = array(
 		'broken' => false,
 		'source' => $img_source,
-		'src' => path_to_forum . 'rehost/' . $rehost_path,
+		'src' => path_to_forum . 'rehost/?img=' . $img_source,
 		'extension' => $img_extension,
 		'hash' => $rehost_hash,
 		'folder' => $rehost_folder,
-		'path' => $rehost_path
+		'path' => $rehost_path,
+		'width' => false,
+		'height' => false
 	);
 
 	if( file_exists( ABSPATH . folder_forum . '/rehost/' . $rehost_path) ) {
