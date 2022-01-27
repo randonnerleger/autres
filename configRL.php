@@ -121,7 +121,7 @@ $hackOperaMini = get_browsername() == 'Opera' ? 'opera' : '' ;
 
 function GetRLStyle() {
 	if ( isset($_COOKIE['RLFontSize'] ) ) {
-		echo '<style id="MyCustomCss">.tclcon a, .pun .postmsg, #punpost .txtarea textarea, #punedit .txtarea textarea, #dokuwiki__site .page {font-size: ' . $_COOKIE['RLFontSize'] . 'rem;}</style>';
+		echo '<style id="MyCustomCss">.tclcon a, .pun .postmsg, #punpost .txtarea textarea, #punedit .txtarea textarea, #dokuwiki__site .page {font-size: ' . $_COOKIE['RLFontSize'] . 'rem; line-height: ' .( (float)$_COOKIE['RLFontSize'] + .8 ) .'rem;}</style>';
 	} else {
 		echo '<style id="MyCustomCss"></style>';
 	}
