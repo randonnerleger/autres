@@ -169,6 +169,25 @@ function get_new_size( $old_w, $old_h, $max = 800 ) {
 	);
 
 }
+function pingDomain($domain){
+
+	$starttime = microtime(true);
+	// supress error messages with @
+	$file      = @fsockopen($domain, 80, $errno, $errstr, 10);
+	$stoptime  = microtime(true);
+	$status    = 0;
+
+	if (!$file){
+		$status = -1;  // Site is down
+	} else {
+		fclose($file);
+		$status = ($stoptime - $starttime) * 1000;
+		$status = floor($status);
+	}
+
+	return $status;
+
+}
 function get_rehost_attr( $url, $rehost = false ) {
 
 	$parsed_url		 	= array_map( 'rawurlencode', parse_url( urldecode($url) ) );
@@ -192,14 +211,27 @@ function get_rehost_attr( $url, $rehost = false ) {
 		'height' => false
 	);
 
-	if( file_exists( ABSPATH . folder_forum . '/rehost/' . $rehost_path) ) {
+
+	if( file_exists( ABSPATH . folder_forum . '/rehost/' . $rehost_path) ) {	// Rehosted file exists, we return it
 		$img_size = getimagesize( ABSPATH . folder_forum . '/rehost/' . $rehost_path );
 		$img_attr = array_merge( $img_attr, array(
 			'src' => path_to_forum . 'rehost/' . $rehost_path,
 			'width' => $img_size[0],
 			'height' => $img_size[1],
 		));
-	} else {
+	} else {																	// Rehosted file does not exists, let's do it
+
+		$ping = pingDomain( $parsed_url['host'] );
+		if ( $ping == -1 ) {													// Prevent 504 timeout
+			$img_attr = array_merge( $img_attr, array(
+				'broken' => true,
+				'width' => 200,
+				'height' => 200
+			));
+			return $img_attr;
+			exit;
+		}
+
 		$header_response = get_headers($img_source);
 		if ($header_response && strpos( $header_response[0], "404" ) === false) {
 			$img_size = getimagesize( $img_source );
@@ -208,18 +240,18 @@ function get_rehost_attr( $url, $rehost = false ) {
 				'width' => $img_size[0],
 				'height' => $img_size[1],
 			));
-		}else {
+		} else {
 			$img_size = false;
 		}
 	}
 
-	if( $img_attr['width'] > 800 || $img_attr['height'] > 800) {
+	if( $img_attr['width'] > 800 || $img_attr['height'] > 800) {				// Rehosted file is large than 800px
 		$new_size = get_new_size( $img_attr['width'], $img_attr['height'], 800 );
 		$img_attr['width'] = $new_size[0];
 		$img_attr['height'] = $new_size[1];
 	}
 
-	if ( ! is_array( $img_size ) ) {
+	if ( ! is_array( $img_size ) ) {											// Rehosted file is not an image
 		$img_attr = array_merge( $img_attr, array(
 			'broken' => true,
 			'width' => 200,
