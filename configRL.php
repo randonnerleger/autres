@@ -191,6 +191,9 @@ function pingDomain($domain){
 function get_rehost_attr( $url, $rehost = false ) {
 
 	$parsed_url		 	= array_map( 'rawurlencode', parse_url( urldecode($url) ) );
+
+	require folder_forum . '/rehost/banned_domains.php';
+
 	$parsed_url['path']	= str_replace( '%2F', '/', $parsed_url['path'] );
 	$img_source			= filter_var( $parsed_url['scheme'] . '://' . $parsed_url['host'] . $parsed_url['path'], FILTER_SANITIZE_URL );
 	$img_extension		= pathinfo( $parsed_url['path'], PATHINFO_EXTENSION );
@@ -211,6 +214,14 @@ function get_rehost_attr( $url, $rehost = false ) {
 		'height' => false
 	);
 
+	if ( in_array( $parsed_url['host'], $banned_from_rehost) ) {
+		$img_attr = array_merge( $img_attr, array(
+			'broken' => true,
+			'width' => 200,
+			'height' => 200
+		));
+		return $img_attr;
+	}
 
 	if( file_exists( ABSPATH . folder_forum . '/rehost/' . $rehost_path) ) {	// Rehosted file exists, we return it
 		$img_size = getimagesize( ABSPATH . folder_forum . '/rehost/' . $rehost_path );
@@ -229,7 +240,6 @@ function get_rehost_attr( $url, $rehost = false ) {
 				'height' => 200
 			));
 			return $img_attr;
-			exit;
 		}
 
 		$header_response = get_headers($img_source);
