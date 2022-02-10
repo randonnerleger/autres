@@ -275,6 +275,7 @@ function get_rehost_attr( $url, $rehost = false ) {
 
 			}
 
+			ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/96.0');
 			$img_size = getimagesize( ( $location != false ? $location : $img_source ) );
 			$img_attr = array_merge( $img_attr, array(
 				'src' => path_to_forum . 'rehost/?img=' . $img_source,
