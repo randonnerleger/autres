@@ -192,7 +192,7 @@ function get_rehost_attr( $url, $rehost = false ) {
 
 	$parsed_url		 	= array_map( 'rawurlencode', parse_url( urldecode($url) ) );
 
-	require folder_forum . '/rehost/banned_domains.php';
+	require ABSPATH . folder_forum . '/rehost/banned_domains.php';
 
 	$parsed_url['path']	= str_replace( '%2F', '/', $parsed_url['path'] );
 	$img_source			= filter_var( $parsed_url['scheme'] . '://' . $parsed_url['host'] . $parsed_url['path'], FILTER_SANITIZE_URL );
@@ -201,6 +201,7 @@ function get_rehost_attr( $url, $rehost = false ) {
 	$rehost_folder		= substr( $img_sha, 0, 2 );
 	$rehost_hash		= $rehost_folder . '/' . substr($img_sha, 2);
 	$rehost_path		= 'i/' . $rehost_hash . ( null != $img_extension ? '.' . $img_extension : '' );
+	$location			= false;
 
 	$img_attr = array(
 		'broken' => false,
@@ -214,7 +215,7 @@ function get_rehost_attr( $url, $rehost = false ) {
 		'height' => false
 	);
 
-	if ( in_array( $parsed_url['host'], $banned_from_rehost) ) {
+	if ( in_array( $parsed_url['host'], $banned_from_rehost) ) {				// Banned domains
 		$img_attr = array_merge( $img_attr, array(
 			'broken' => true,
 			'width' => 200,
@@ -242,16 +243,51 @@ function get_rehost_attr( $url, $rehost = false ) {
 			return $img_attr;
 		}
 
-		$header_response = get_headers($img_source);
-		if ($header_response && strpos( $header_response[0], "404" ) === false) {
-			$img_size = getimagesize( $img_source );
+		$headers = get_headers( $img_source, 1 );
+		$headers = array_change_key_case( $headers,  CASE_LOWER );
+		if ( $headers && strpos( $headers[0], "404" ) === false ) {
+
+			if ( isset( $headers['location'] ) ) {								// Redirect management
+
+				if ( is_array( $headers['location'] ) ) {
+					$location = end( $headers['location'] );
+				} else {
+					$location = $headers['location'];
+				}
+
+				foreach( $headers as $key => $value ) {
+					if( ! is_int( $key ) ) {
+						unset( $headers[$key] );
+					}
+				}
+
+				$location = array_map( 'rawurlencode', parse_url( urldecode($location) ) );
+				if ( pingDomain( $location['host'] ) == -1 || strpos( end( $headers ), "404" ) !== false ) {
+					$img_attr = array_merge( $img_attr, array(
+						'broken' => true,
+						'width' => 200,
+						'height' => 200
+					));
+					return $img_attr;
+				}
+
+				$location = str_replace( '%2F', '/', $parsed_location['path'] );
+
+			}
+
+			ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/96.0');
+			$img_size = getimagesize( ( $location != false ? $location : $img_source ) );
 			$img_attr = array_merge( $img_attr, array(
 				'src' => path_to_forum . 'rehost/?img=' . $img_source,
 				'width' => $img_size[0],
 				'height' => $img_size[1],
+				'location' => $location
 			));
+
 		} else {
+
 			$img_size = false;
+
 		}
 	}
 
