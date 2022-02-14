@@ -1,7 +1,7 @@
 <?php
 define('ABSPATH', dirname(__FILE__) . '/');
 
-define("current_theme",			"2.4.2");									# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
+define("current_theme",			"2.4.3");								# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
 
 define("folder_rl",				"");									# Renseigner le sous dossier ou serait le site RL, en localhost notamment
 define("folder_forum",			"forum");								# Nom du dossier ou est le forum
@@ -22,6 +22,8 @@ define("count_path_to_forum",	strlen(path_to_forum));					# /!\ NE PAS TOUCHER =
 define("count_path_to_wiki",	strlen(path_to_wiki));					# /!\ NE PAS TOUCHER => on détermine le nombre de caractères du chemin wiki
 
 define("current_folder",		substr(path_abs, count_path_to_rl));	# Je détermine le dossier dans lequel je suis
+
+define("SWIPEBOX_ON",			1);										# Swipebox 1 pour ON, 0 pour OFF
 
 // Initialisation des variables utilisées dans le menu gauche
 $conf['pun_style'] = isset($pun_user['style']) ? $pun_user['style'] : '' ;
