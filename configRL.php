@@ -1,7 +1,8 @@
 <?php
 define('ABSPATH', dirname(__FILE__) . '/');
 
-define("current_theme",			"2.4.3");								# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
+define("DOMAIN",				$_SERVER['HTTP_HOST']);					# Domain : www.randonner-leger.org, dev.randonner-leger.org, localhost
+define("current_theme",			"2.4.4");								# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
 
 define("folder_rl",				"");									# Renseigner le sous dossier ou serait le site RL, en localhost notamment
 define("folder_forum",			"forum");								# Nom du dossier ou est le forum
@@ -31,8 +32,7 @@ $conf['group_id'] = isset($pun_user['group_id']) ? $pun_user['group_id'] : '' ;
 $conf['id'] = isset($pun_user['id']) ? $pun_user['id'] : '' ;
 
 // Site url et affichage des erreurs en local hors www. et dev
-$domains = array('www.randonner-leger.org', 'dev.randonner-leger.org');
-if (in_array($_SERVER['HTTP_HOST'], $domains)) {
+if (in_array($_SERVER['HTTP_HOST'], DOMAIN)) {
 	$domain = $_SERVER['HTTP_HOST'];
 	$site_url = 'https://' . $domain;
 } else {
@@ -148,168 +148,6 @@ function isRLSombre($pun_user_style) {
 
 	echo $isRLSombre;
 }
-function get_new_size( $old_w, $old_h, $max = 800 ) {
-
-	if( $old_w > $old_h ) {
-		$new_w = $max;
-		$new_h = $old_h * ( $max/$old_w );
-	}
-
-	if( $old_w < $old_h ) {
-		$new_w = $old_w * ( $max/$old_h );
-		$new_h = $max;
-	}
-
-	if( $old_w == $old_h ) {
-		$new_w = $max;
-		$new_h = $max;
-	}
-
-	return array(
-		(int)$new_w,
-		(int)$new_h
-	);
-
-}
-function pingDomain($domain){
-
-	$starttime = microtime(true);
-	// supress error messages with @
-	$file      = @fsockopen($domain, 80, $errno, $errstr, 10);
-	$stoptime  = microtime(true);
-	$status    = 0;
-
-	if (!$file){
-		$status = -1;  // Site is down
-	} else {
-		fclose($file);
-		$status = ($stoptime - $starttime) * 1000;
-		$status = floor($status);
-	}
-
-	return $status;
-
-}
-function get_rehost_attr( $url, $rehost = false ) {
-
-	$parsed_url		 	= array_map( 'rawurlencode', parse_url( urldecode($url) ) );
-
-	require ABSPATH . folder_forum . '/rehost/banned_domains.php';
-
-	$parsed_url['path']	= str_replace( '%2F', '/', $parsed_url['path'] );
-	$img_source			= filter_var( $parsed_url['scheme'] . '://' . $parsed_url['host'] . $parsed_url['path'], FILTER_SANITIZE_URL );
-	$img_extension		= pathinfo( $parsed_url['path'], PATHINFO_EXTENSION );
-	$img_sha			= sha1( $img_source );
-	$rehost_folder		= substr( $img_sha, 0, 2 );
-	$rehost_hash		= $rehost_folder . '/' . substr($img_sha, 2);
-	$rehost_path		= 'i/' . $rehost_hash . ( null != $img_extension ? '.' . $img_extension : '' );
-	$location			= false;
-
-	$img_attr = array(
-		'broken' => false,
-		'source' => $img_source,
-		'src' => path_to_forum . 'rehost/?img=' . $img_source,
-		'extension' => $img_extension,
-		'hash' => $rehost_hash,
-		'folder' => $rehost_folder,
-		'path' => $rehost_path,
-		'width' => false,
-		'height' => false
-	);
-
-	if ( in_array( $parsed_url['host'], $banned_from_rehost) ) {				// Banned domains
-		$img_attr = array_merge( $img_attr, array(
-			'broken' => true,
-			'width' => 200,
-			'height' => 200
-		));
-		return $img_attr;
-	}
-
-	if( file_exists( ABSPATH . folder_forum . '/rehost/' . $rehost_path) ) {	// Rehosted file exists, we return it
-		$img_size = getimagesize( ABSPATH . folder_forum . '/rehost/' . $rehost_path );
-		$img_attr = array_merge( $img_attr, array(
-			'src' => path_to_forum . 'rehost/' . $rehost_path,
-			'width' => $img_size[0],
-			'height' => $img_size[1],
-		));
-	} else {																	// Rehosted file does not exists, let's do it
-
-		$ping = pingDomain( $parsed_url['host'] );
-		if ( $ping == -1 ) {													// Prevent 504 timeout
-			$img_attr = array_merge( $img_attr, array(
-				'broken' => true,
-				'width' => 200,
-				'height' => 200
-			));
-			return $img_attr;
-		}
-
-		$headers = get_headers( $img_source, 1 );
-		$headers = array_change_key_case( $headers,  CASE_LOWER );
-		if ( $headers && strpos( $headers[0], "404" ) === false ) {
-
-			if ( isset( $headers['location'] ) ) {								// Redirect management
-
-				if ( is_array( $headers['location'] ) ) {
-					$location = end( $headers['location'] );
-				} else {
-					$location = $headers['location'];
-				}
-
-				foreach( $headers as $key => $value ) {
-					if( ! is_int( $key ) ) {
-						unset( $headers[$key] );
-					}
-				}
-
-				$location = array_map( 'rawurlencode', parse_url( urldecode($location) ) );
-				if ( pingDomain( $location['host'] ) == -1 || strpos( end( $headers ), "404" ) !== false ) {
-					$img_attr = array_merge( $img_attr, array(
-						'broken' => true,
-						'width' => 200,
-						'height' => 200
-					));
-					return $img_attr;
-				}
-
-				$location = str_replace( '%2F', '/', $parsed_location['path'] );
-
-			}
-
-			ini_set('user_agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/96.0');
-			$img_size = getimagesize( ( $location != false ? $location : $img_source ) );
-			$img_attr = array_merge( $img_attr, array(
-				'src' => path_to_forum . 'rehost/?img=' . $img_source,
-				'width' => $img_size[0],
-				'height' => $img_size[1],
-				'location' => $location
-			));
-
-		} else {
-
-			$img_size = false;
-
-		}
-	}
-
-	if( $img_attr['width'] > 800 || $img_attr['height'] > 800) {				// Rehosted file is large than 800px
-		$new_size = get_new_size( $img_attr['width'], $img_attr['height'], 800 );
-		$img_attr['width'] = $new_size[0];
-		$img_attr['height'] = $new_size[1];
-	}
-
-	if ( ! is_array( $img_size ) ) {											// Rehosted file is not an image
-		$img_attr = array_merge( $img_attr, array(
-			'broken' => true,
-			'width' => 200,
-			'height' => 200
-		));
-	}
-
-	return $img_attr;
-
-}
 class UserInput {
 	protected $post, $get, $cookie;
 	/**
@@ -369,3 +207,5 @@ class UserInput {
 		return $filter;
 	}
 }
+
+require_once ABSPATH . folder_forum . '/rehost/functions.php';
