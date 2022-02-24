@@ -2,6 +2,7 @@
 define('ABSPATH', dirname(__FILE__) . '/');
 
 define("DOMAIN",				$_SERVER['HTTP_HOST']);					# Domain : www.randonner-leger.org, dev.randonner-leger.org, localhost
+define("DOMAINS",				array('www.randonner-leger.org', 'dev.randonner-leger.org'));
 define("current_theme",			"2.4.4");								# Numéro du thème. Utilisé pour appel css et scripts.js dans le footer.
 
 define("folder_rl",				"");									# Renseigner le sous dossier ou serait le site RL, en localhost notamment
@@ -32,7 +33,7 @@ $conf['group_id'] = isset($pun_user['group_id']) ? $pun_user['group_id'] : '' ;
 $conf['id'] = isset($pun_user['id']) ? $pun_user['id'] : '' ;
 
 // Site url et affichage des erreurs en local hors www. et dev
-if (in_array($_SERVER['HTTP_HOST'], DOMAIN)) {
+if ( in_array(DOMAIN, DOMAINS)) {
 	$domain = $_SERVER['HTTP_HOST'];
 	$site_url = 'https://' . $domain;
 } else {
